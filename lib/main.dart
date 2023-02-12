@@ -1,38 +1,54 @@
 import 'package:flutter/material.dart';
+import 'quote.dart';
+import 'quote_card.dart';
 
 void main() => runApp(const MaterialApp(
   home: Home(),
 ));
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  List<Quote> quotes = [
+    Quote(author: 'sumantt', text: 'this is a text'),
+    Quote(author: 'sunseet', text: 'this is a text1'),
+    Quote(author: 'raju', text: 'khata hai kaaju'),
+  ];
+
+  // List<String> authors = [''];
+
+  //we will create a function that will convert individual quote into a card which is of widget type
+  //we created a new instance of the quote card here
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text('My first Apple'),
+        title: Text('Awesome Quotes'),
         centerTitle: true,
-        backgroundColor: Colors.red[600],
+        backgroundColor: Colors.redAccent,
       ),
-      body: const Center(
-        child: Text(
-          'hello sumant',
-          style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2.0,
-              color: Colors.pink,
-              fontFamily: 'IndieFlower'
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.red[600],
-        child: const Text('click'),
+      body: Column(
+        children: quotes.map((quote) => QuoteCard(
+            quote:quote,
+              delete: () {
+              setState(() {
+                quotes.remove(quote);
+              });
+            }
+        )).toList(),
       ),
     );
   }
 }
+
+
 
